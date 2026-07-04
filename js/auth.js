@@ -1,9 +1,23 @@
+function cleanNext(next){
+  if(!next) return 'account/index.html';
+
+  next = decodeURIComponent(next);
+
+  // եթե սխալով /checkout.html է եկել, դարձնում ենք checkout.html
+  next = next.replace(/^\/+/, '');
+
+  // եթե լրիվ URL է, վերցնում ենք միայն path-ը
+  try{
+    const u = new URL(next, location.href);
+    next = u.pathname.split('/').pop() || 'index.html';
+  }catch(e){}
+
+  return next;
+}
+
 function getNext(defaultPath = 'account/index.html'){
   const next = new URLSearchParams(location.search).get('next');
-  if(!next) return defaultPath;
-
-  // GitHub Pages-ում 404 չստանալու համար հանում ենք սկզբի /
-  return next.replace(/^\/+/, '');
+  return cleanNext(next || defaultPath);
 }
 
 async function registerUser(){
@@ -40,7 +54,7 @@ async function registerUser(){
     const msg = (error.message || '').toLowerCase();
 
     if(msg.includes('already registered') || msg.includes('already exists')){
-      alert('Այս email-ով հաշիվ արդեն կա։ Խնդրում ենք մուտք գործել։');
+      alert('Այս email-ով հաշիվ արդեն կա։ Մուտք գործեք։');
       location.href = 'login.html?next=' + encodeURIComponent(getNext('checkout.html'));
       return;
     }
@@ -51,7 +65,6 @@ async function registerUser(){
       btn.disabled = false;
       btn.textContent = 'Գրանցվել';
     }
-
     return;
   }
 
@@ -65,7 +78,6 @@ async function registerUser(){
 
   alert('Հաշիվը ստեղծվեց ✅');
 
-  // Եթե Supabase-ը ավտոմատ session չի տալիս, տանում ենք մուտքի էջ
   const session = await Aramazd.getSession();
 
   if(!session){
@@ -73,7 +85,7 @@ async function registerUser(){
     return;
   }
 
-  location.href = getNext('account/index.html');
+  location.href = getNext('checkout.html');
 }
 
 async function loginUser(){
@@ -103,7 +115,6 @@ async function loginUser(){
       btn.disabled = false;
       btn.textContent = 'Մուտք գործել';
     }
-
     return;
   }
 
@@ -111,7 +122,7 @@ async function loginUser(){
     await Aramazd.ensureProfile(data.user);
   }
 
-  location.href = getNext('account/index.html');
+  location.href = getNext('checkout.html');
 }
 
 async function logoutUser(){
@@ -128,7 +139,7 @@ async function resetPassword(){
   }
 
   const { error } = await aramazdClient.auth.resetPasswordForEmail(email, {
-    redirectTo: location.origin + location.pathname.replace('login.html', 'reset-password.html')
+    redirectTo: location.href.replace('login.html', 'reset-password.html')
   });
 
   if(error){
