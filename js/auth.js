@@ -1,3 +1,10 @@
+function getNext(defaultPath = 'account/index.html'){
+  const next = new URLSearchParams(location.search).get('next');
+  if(!next) return defaultPath;
+
+  // GitHub Pages-ում 404 չստանալու համար հանում ենք սկզբի /
+  return next.replace(/^\/+/, '');
+}
 
 async function registerUser(){
   const fullName = document.getElementById('fullName')?.value.trim();
@@ -10,12 +17,16 @@ async function registerUser(){
     alert('Լրացրեք բոլոր դաշտերը');
     return;
   }
+
   if(password.length < 6){
     alert('Գաղտնաբառը պետք է լինի առնվազն 6 նշան');
     return;
   }
 
-  if(btn){ btn.disabled = true; btn.textContent = 'Գրանցվում է...'; }
+  if(btn){
+    btn.disabled = true;
+    btn.textContent = 'Գրանցվում է...';
+  }
 
   const { data, error } = await aramazdClient.auth.signUp({
     email,
@@ -26,18 +37,43 @@ async function registerUser(){
   });
 
   if(error){
+    const msg = (error.message || '').toLowerCase();
+
+    if(msg.includes('already registered') || msg.includes('already exists')){
+      alert('Այս email-ով հաշիվ արդեն կա։ Խնդրում ենք մուտք գործել։');
+      location.href = 'login.html?next=' + encodeURIComponent(getNext('checkout.html'));
+      return;
+    }
+
     alert('Սխալ։ ' + error.message);
-    if(btn){ btn.disabled = false; btn.textContent = 'Գրանցվել'; }
+
+    if(btn){
+      btn.disabled = false;
+      btn.textContent = 'Գրանցվել';
+    }
+
     return;
   }
 
   if(data.user){
-    await Aramazd.ensureProfile(data.user, { full_name: fullName, phone, role: 'customer' });
+    await Aramazd.ensureProfile(data.user, {
+      full_name: fullName,
+      phone,
+      role: 'customer'
+    });
   }
 
-  const next = new URLSearchParams(location.search).get('next') || 'account/index.html';
   alert('Հաշիվը ստեղծվեց ✅');
-  location.href = next;
+
+  // Եթե Supabase-ը ավտոմատ session չի տալիս, տանում ենք մուտքի էջ
+  const session = await Aramazd.getSession();
+
+  if(!session){
+    location.href = 'login.html?next=' + encodeURIComponent(getNext('checkout.html'));
+    return;
+  }
+
+  location.href = getNext('account/index.html');
 }
 
 async function loginUser(){
@@ -49,19 +85,33 @@ async function loginUser(){
     alert('Լրացրեք email-ն ու գաղտնաբառը');
     return;
   }
-  if(btn){ btn.disabled = true; btn.textContent = 'Մուտք է գործում...'; }
 
-  const { data, error } = await aramazdClient.auth.signInWithPassword({ email, password });
+  if(btn){
+    btn.disabled = true;
+    btn.textContent = 'Մուտք է գործում...';
+  }
+
+  const { data, error } = await aramazdClient.auth.signInWithPassword({
+    email,
+    password
+  });
 
   if(error){
     alert('Սխալ։ ' + error.message);
-    if(btn){ btn.disabled = false; btn.textContent = 'Մուտք գործել'; }
+
+    if(btn){
+      btn.disabled = false;
+      btn.textContent = 'Մուտք գործել';
+    }
+
     return;
   }
 
-  if(data.user) await Aramazd.ensureProfile(data.user);
-  const next = new URLSearchParams(location.search).get('next') || 'account/index.html';
-  location.href = next;
+  if(data.user){
+    await Aramazd.ensureProfile(data.user);
+  }
+
+  location.href = getNext('account/index.html');
 }
 
 async function logoutUser(){
@@ -71,10 +121,20 @@ async function logoutUser(){
 
 async function resetPassword(){
   const email = document.getElementById('email')?.value.trim();
-  if(!email){ alert('Գրեք email-ը'); return; }
+
+  if(!email){
+    alert('Գրեք email-ը');
+    return;
+  }
+
   const { error } = await aramazdClient.auth.resetPasswordForEmail(email, {
     redirectTo: location.origin + location.pathname.replace('login.html', 'reset-password.html')
   });
-  if(error){ alert('Սխալ։ ' + error.message); return; }
+
+  if(error){
+    alert('Սխալ։ ' + error.message);
+    return;
+  }
+
   alert('Վերականգնման հղումը ուղարկվեց email-ին։');
 }
