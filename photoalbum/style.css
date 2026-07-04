@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@700;900&family=Noto+Sans+Armenian:wght@400;600;700;900&display=swap');
+:root{--bg:#fbf7ef;--paper:#fffdf8;--navy:#08294f;--gold:#e1a72f;--muted:#657184;--line:rgba(8,41,79,.12)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--navy);font-family:"Noto Sans Armenian",Arial,sans-serif}
+.topbar{height:86px;background:rgba(255,253,248,.92);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 56px;position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
+.logo{height:60px}
+nav{display:flex;gap:48px;font-weight:900}
+nav a{color:var(--navy);text-decoration:none}
+.order-btn{background:var(--gold);padding:16px 34px;border-radius:999px;text-decoration:none;color:var(--navy);font-weight:900;box-shadow:0 12px 28px rgba(225,167,47,.25)}
+.page{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:54px;padding:54px 6vw 80px;align-items:start}
+.builder{max-width:1120px}
+h1{font-family:"Noto Serif Armenian",serif;font-size:56px;margin:0 0 10px;line-height:1}
+.intro{font-size:18px;color:var(--muted);margin-bottom:42px}
+.step{margin-bottom:44px}
+h2{font-size:25px;margin:0 0 20px}
+.cards{display:grid;gap:20px}
+.three{grid-template-columns:repeat(3,1fr)}
+.four{grid-template-columns:repeat(4,1fr)}
+.five{grid-template-columns:repeat(5,1fr)}
+.two{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;min-height:112px;padding:22px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;cursor:pointer;box-shadow:0 12px 32px rgba(8,41,79,.04);position:relative}
+.card input{position:absolute;right:22px;top:22px;width:auto}
+.card.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(225,167,47,.18)}
+.card b{font-size:18px}
+.card small{color:var(--muted);line-height:1.45}
+.icon{font-size:36px;color:var(--gold)}
+.hidden{display:none!important}
+.nfc{background:var(--paper);border:1px solid rgba(225,167,47,.55);border-radius:22px;padding:24px;margin:24px 0 44px;display:grid;grid-template-columns:72px 1fr 280px;gap:22px;align-items:center}
+.nfc-icon{width:58px;height:58px;border:2px solid var(--navy);border-radius:14px;display:grid;place-items:center;font-weight:900}
+.nfc p{color:var(--muted);line-height:1.7;margin:0}
+.video-options label,.checks label,.contact label{display:inline-flex;align-items:center;gap:8px;margin:8px 18px 8px 0;font-weight:800}
+.video-options input,.checks input,.contact input{width:auto}
+.video-upload{grid-column:2/4;font-weight:900}
+.field{display:block;font-weight:900;margin:24px 0}
+input,textarea{width:100%;margin-top:8px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:white;font:inherit;color:var(--navy)}
+textarea{min-height:130px}
+.upload{background:white;border:2px dashed rgba(8,41,79,.25);border-radius:22px;min-height:130px;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;gap:8px;cursor:pointer}
+.upload span{font-size:34px}
+.upload small{color:var(--muted)}
+.status{font-weight:900;color:var(--muted);margin:14px 0}
+.thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.thumbs img{width:100%;height:82px;object-fit:cover;border-radius:12px}
+.checks,.contact{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px}
+.summary{position:sticky;top:110px;background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:0 24px 70px rgba(8,41,79,.08)}
+.summary h2{font-family:"Noto Serif Armenian",serif;font-size:32px}
+.row,.total{display:flex;justify-content:space-between;gap:18px;margin:20px 0}
+.row span{color:var(--muted)}
+.total{border-top:1px solid var(--line);padding-top:24px;font-size:24px;font-weight:900}
+.total b{color:var(--gold)}
+.summary button{width:100%;border:0;background:var(--gold);color:var(--navy);font-weight:900;border-radius:16px;padding:18px;margin-top:16px;font-size:17px;cursor:pointer}
+.safe{text-align:center;color:var(--muted);font-size:14px}
+@media(max-width:1150px){.page{grid-template-columns:1fr}.summary{position:static}.three,.four,.five{grid-template-columns:repeat(2,1fr)}.nfc{grid-template-columns:1fr}.video-upload{grid-column:auto}}
+@media(max-width:720px){.topbar{padding:14px 18px;height:auto}nav{display:none}.logo{height:54px}.page{padding:28px 18px}.three,.four,.five,.two{grid-template-columns:1fr}h1{font-size:42px}.thumbs{grid-template-columns:repeat(3,1fr)}}
+
+.brand img{height:60px;max-width:170px;object-fit:contain}
+
+/* approved photo album hero */
+.photo-hero{
+  margin:34px 2.5vw 54px;
+  background:linear-gradient(135deg,#fffdf8,#f2e3cb);
+  border:1px solid var(--line);
+  border-radius:34px;
+  min-height:520px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:50px;
+  align-items:center;
+  padding:70px;
+  box-shadow:0 24px 70px rgba(8,41,79,.06);
+}
+.photo-hero-text span{color:var(--gold);letter-spacing:.16em;font-weight:900}
+.photo-hero-text h1{font-family:"Noto Serif Armenian",serif;font-size:clamp(56px,7vw,98px);line-height:1;margin:14px 0;color:var(--navy)}
+.photo-hero-text p{font-size:20px;line-height:1.8;color:var(--muted);max-width:760px}
+.actions{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--gold);padding:16px 32px;border-radius:999px;text-decoration:none;color:var(--navy);font-weight:900;box-shadow:0 12px 28px rgba(225,167,47,.25)}
+.btn.ghost{background:white;border:1px solid var(--line);box-shadow:none}
+.album-mockup{height:360px;position:relative;display:flex;align-items:end;justify-content:center}
+.book{background:white;border:8px solid #e8edf5;border-radius:18px;display:grid;place-items:center;font-weight:900;color:var(--navy);box-shadow:0 28px 60px rgba(8,41,79,.14)}
+.book-lg{width:190px;height:300px;z-index:1}
+.book-md{width:160px;height:250px;margin-left:-24px;z-index:2}
+.book-sm{width:130px;height:205px;margin-left:-18px;z-index:3}
+@media(max-width:900px){.photo-hero{grid-template-columns:1fr;padding:38px}.album-mockup{height:260px}.book-lg{width:150px;height:230px}.book-md{width:125px;height:195px}.book-sm{width:105px;height:160px}}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Aramazd Art</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="admin-wrap">
+  <aside class="admin-side">
+    <img src="assets/logo/aramazd-logo-white.png" alt="Aramazd Art">
+    <a class="active" href="admin.html">🏠 Admin Dashboard</a>
+    <a href="#photosBox">📷 Նկարներ</a>
+    <a href="#receiptsBox">🧾 Անդորրագրեր</a>
+    <a href="#contactsBox">📩 Հետադարձ կապ</a>
+    <a href="account/index.html">👤 Իմ սրահը</a>
+    <a href="index.html">← Կայք</a>
+    <button onclick="logoutAdmin()">Դուրս գալ</button>
+  </aside>
+  <main class="admin-main">
+    <span class="label">ARAMAZD ART</span>
+    <h1>Admin Panel</h1>
+    <p>Այստեղ երևում են բոլոր պատվերները։ Կարող եք փոխել կարգավիճակը, վճարման տվյալները և նշումներ ավելացնել։</p>
+    <div class="admin-grid">
+      <div class="stat"><b id="aAll">0</b><span>Բոլոր պատվերները</span></div>
+      <div class="stat"><b id="aNew">0</b><span>Նոր պատվեր</span></div>
+      <div class="stat"><b id="aIncome">0 դր․</b><span>Վճարված գումար</span></div>
+      <div class="stat"><b id="aDebt">0 դր․</b><span>Մնացորդ</span></div>
+    </div>
+    <div class="pay-box">
+      <input id="search" placeholder="Որոնել անունով, հեռախոսով կամ ապրանքով" style="width:100%;padding:14px;border-radius:14px;border:1px solid #ddd" oninput="renderOrders()">
+    </div>
+    <div style="overflow:auto">
+      <table class="admin-table">
+        <thead><tr><th>ID</th><th>Հաճախորդ</th><th>Ապրանք</th><th>Գին</th><th>Վճարված</th><th>Կարգավիճակ</th><th>Գործողություն</th></tr></thead>
+        <tbody id="adminOrders"><tr><td colspan="7">Բեռնվում է...</td></tr></tbody>
+      </table>
+    </div>
+
+    <div id="photosBox" class="pay-box" style="margin-top:30px">
+      <h2>📷 Նկարներ</h2>
+      <div id="photosList">Բեռնվում է...</div>
+    </div>
+
+    <div id="receiptsBox" class="pay-box" style="margin-top:30px">
+      <h2>🧾 Անդորրագրեր</h2>
+      <div id="receiptsList">Բեռնվում է...</div>
+    </div>
+    <div id="contactsBox" class="pay-box" style="margin-top:30px"><h2>📩 Հետադարձ կապ</h2><div id="contactsList">Բեռնվում է...</div></div>
+  </main>
+</div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script>
+let adminOrders=[];
+function money(n){return Number(n||0).toLocaleString('hy-AM')+' դր․'}
+async function checkAdmin(){
+ const session=await Aramazd.getSession();
+ if(!session){location.href='login.html?next=admin.html';return;}
+ const profile=await Aramazd.ensureProfile(session.user);
+ if(profile?.role!=='admin'){
+   alert('Այս էջը միայն ադմինի համար է։');
+   location.href='account/index.html';
+   return;
+ }
+ loadOrders(); loadContacts();
+}
+async function loadOrders(){
+ const {data,error}=await aramazdClient.from('orders').select('*').order('created_at',{ascending:false});
+ if(error){document.getElementById('adminOrders').innerHTML='<tr><td colspan="7">Սխալ՝ '+error.message+'</td></tr>';return;}
+ adminOrders=data||[];
+ renderStats(); renderOrders(); renderPhotos(); renderReceipts();
+}
+function renderStats(){
+ document.getElementById('aAll').textContent=adminOrders.length;
+ document.getElementById('aNew').textContent=adminOrders.filter(o=>(o.status||'').includes('Նոր')).length;
+ document.getElementById('aIncome').textContent=money(adminOrders.reduce((s,o)=>s+Number(o.paid_amount||0),0));
+ document.getElementById('aDebt').textContent=money(adminOrders.reduce((s,o)=>s+Math.max(Number(o.price||0)-Number(o.paid_amount||0),0),0));
+}
+function renderOrders(){
+ const q=(document.getElementById('search')?.value||'').toLowerCase();
+ const rows=adminOrders.filter(o=>JSON.stringify(o).toLowerCase().includes(q));
+ document.getElementById('adminOrders').innerHTML=rows.map(o=>`
+ <tr>
+  <td>#AA-${o.id}</td>
+  <td>${o.customer_name||''}<br><small>${o.phone||''}</small></td>
+  <td>${o.product||''}</td>
+  <td>${money(o.price)}</td>
+  <td><input type="number" id="paid_${o.id}" value="${o.paid_amount||0}" style="width:95px"></td>
+  <td><select id="status_${o.id}">
+    ${['Նոր պատվեր','Տվյալները ստացվել են','Հեքիաթը գրվում է','Իլյուստրացիաների փուլ','Դիզայնի փուլ','Տպագրություն','Պատրաստ է','Առաքում','Առաքված','Ավարտված'].map(s=>`<option ${s===(o.status||'')?'selected':''}>${s}</option>`).join('')}
+  </select></td>
+  <td><a class="mini-btn" href="admin-order.html?id=${o.id}">Բացել</a></td>
+ </tr>`).join('') || '<tr><td colspan="7">Պատվերներ չկան</td></tr>';
+}
+async function saveOrder(id){
+ const paid = Number(document.getElementById('paid_' + id).value || 0);
+ const status = document.getElementById('status_' + id).value;
+ const order = adminOrders.find(o => o.id === id);
+
+ let payment_status = 'Չհաստատված';
+
+ if (paid > 0 && paid < Number(order.price || 0)) {
+   payment_status = 'Կանխավճար ստացված';
+ }
+
+ if (paid >= Number(order.price || 0)) {
+   payment_status = 'Ամբողջությամբ վճարված';
+ }
+
+ const { error } = await aramazdClient
+   .from('orders')
+   .update({
+     paid_amount: paid,
+     status: status,
+     payment_status: payment_status
+   })
+   .eq('id', id);
+
+ if(error){
+   alert('Սխալ։ ' + error.message);
+   return;
+ }
+
+ alert('Պահպանվեց ✅');
+ await loadOrders();
+}
+
+function imageThumb(url){
+  return `<a href="${url}" target="_blank"><img src="${url}" onerror="this.style.display='none'" style="width:82px;height:82px;object-fit:cover;border-radius:12px;border:1px solid #eee"></a>`;
+}
+function asArray(v){ return Array.isArray(v) ? v : []; }
+function renderPhotos(){
+  const box=document.getElementById('photosList'); if(!box) return;
+  const withPhotos=adminOrders.filter(o=>asArray(o.order_photos).length);
+  box.innerHTML=withPhotos.map(o=>`
+    <div class="history" style="align-items:flex-start;gap:14px">
+      <span style="min-width:170px"><b>#AA-${o.id}</b><br><small>${o.customer_name||''} • ${o.product||''}</small><br><a href="admin-order.html?id=${o.id}">Բացել պատվերը</a></span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">${asArray(o.order_photos).map(imageThumb).join('')}</span>
+    </div>`).join('') || '<p>Կցված նկարներ դեռ չկան</p>';
+}
+function renderReceipts(){
+  const box=document.getElementById('receiptsList'); if(!box) return;
+  const withReceipts=adminOrders.filter(o=>o.receipt_url || o.final_receipt_url);
+  box.innerHTML=withReceipts.map(o=>`
+    <div class="history" style="align-items:flex-start;gap:14px">
+      <span><b>#AA-${o.id}</b> • ${o.customer_name||''}<br><small>${o.product||''} • ${o.payment_status||''}</small><br><a href="admin-order.html?id=${o.id}">Բացել պատվերը</a></span>
+      <span>
+        ${o.receipt_url ? `<a class="mini-btn" href="${o.receipt_url}" target="_blank">Կանխավճարի անդորրագիր</a>` : ''}
+        ${o.final_receipt_url ? `<a class="mini-btn" href="${o.final_receipt_url}" target="_blank">Վերջնական անդորրագիր</a>` : ''}
+      </span>
+    </div>`).join('') || '<p>Անդորրագրեր դեռ չկան</p>';
+}
+
+async function loadContacts(){
+ const box=document.getElementById('contactsList'); if(!box) return;
+ const {data,error}=await aramazdClient.from('contacts').select('*').order('created_at',{ascending:false});
+ if(error){box.innerHTML='Սխալ՝ '+error.message;return;}
+ box.innerHTML=(data||[]).map(c=>`<div class="history" style="align-items:flex-start"><span><b>${c.name||''}</b> • ${c.phone||''} • ${c.email||''}<br><small>${c.subject||''}</small><p>${c.message||''}</p></span><b>${c.status||'Չկարդացված'}</b></div>`).join('')||'<p>Նամակներ չկան</p>';
+}
+
+async function logoutAdmin(){await aramazdClient.auth.signOut();location.href='login.html';}
+document.addEventListener('DOMContentLoaded',checkAdmin);
+</script>
+</body>
+</html>

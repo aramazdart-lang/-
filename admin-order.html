@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Պատվերի կառավարում | Aramazd Art</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="admin-wrap">
+  <aside class="admin-side">
+    <img src="assets/logo/aramazd-logo-white.png" alt="Aramazd Art">
+    <a href="admin.html">← Բոլոր պատվերները</a>
+    <a href="account/index.html">👤 Իմ սրահը</a>
+    <a href="index.html">← Կայք</a>
+    <button onclick="logoutAdmin()">Դուրս գալ</button>
+  </aside>
+
+  <main class="admin-main">
+    <span class="label">ARAMAZD ART</span>
+    <h1>Պատվերի կառավարում</h1>
+    <div id="orderBox">Բեռնվում է...</div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+
+<script>
+let order = null;
+
+function money(n){
+  return Number(n || 0).toLocaleString('hy-AM') + ' դր․';
+}
+
+function id(){
+  return new URLSearchParams(location.search).get('id');
+}
+
+function safeName(name){
+  return String(name || 'file')
+    .replace(/[^\w.\-]+/g, '_')
+    .toLowerCase();
+}
+
+function arr(v){ return Array.isArray(v) ? v : []; }
+function mediaLink(url,label){ return url ? `<a class="mini-btn" href="${url}" target="_blank">${label}</a>` : 'չկա'; }
+function imgGallery(urls){ return arr(urls).length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:12px">${arr(urls).map(u=>`<a href="${u}" target="_blank"><img src="${u}" style="width:100%;height:120px;object-fit:cover;border-radius:14px"></a>`).join('')}</div>` : '<p>Նկարներ չկան</p>'; }
+
+
+async function checkAdmin(){
+  const session = await Aramazd.getSession();
+
+  if(!session){
+    location.href = 'login.html?next=admin-order.html?id=' + id();
+    return;
+  }
+
+  const profile = await Aramazd.ensureProfile(session.user);
+
+  if(profile?.role !== 'admin'){
+    alert('Այս էջը միայն ադմինի համար է։');
+    location.href = 'account/index.html';
+    return;
+  }
+
+  await loadOrder();
+}
+
+async function loadOrder(){
+  const { data, error } = await aramazdClient
+    .from('orders')
+    .select('*')
+    .eq('id', id())
+    .single();
+
+  if(error){
+    document.getElementById('orderBox').innerHTML = 'Սխալ՝ ' + error.message;
+    return;
+  }
+
+  order = data;
+  renderOrder();
+}
+
+function renderOrder(){
+  const d = order.details || {};
+
+  document.getElementById('orderBox').innerHTML = `
+    <div class="pay-box">
+      <h2>#AA-${order.id} — ${order.product || ''}</h2>
+      <p><b>Հաճախորդ․</b> ${order.customer_name || ''}</p>
+      <p><b>Հեռախոս․</b> ${order.phone || ''}</p>
+      <p><b>Email․</b> ${d.customer_email || ''}</p>
+    </div>
+
+    <div class="pay-box">
+      <h2>Երեխայի / պատվերի տվյալներ</h2>
+      <p><b>Երեխայի անուն․</b> ${d.child_name || ''}</p>
+      <p><b>Տարիք․</b> ${d.age || ''}</p>
+      <p><b>Սեռ․</b> ${d.gender || ''}</p>
+      <p><b>Ընտրված հեքիաթ․</b> ${d.selected_story || ''}</p>
+      <p><b>Նկարների քանակ․</b> ${d.uploaded_count || 0}</p>
+      <p><b>Նշումներ․</b> ${d.notes || ''}</p>
+    </div>
+
+    <div class="pay-box">
+      <h2>📷 Հաճախորդի նկարները</h2>
+      <p class="muted">Հաճախորդի կցած նկարները առանձին երևում են այստեղ։</p>
+      ${imgGallery(order.order_photos)}
+    </div>
+
+    <div class="pay-box">
+      <h2>🧾 Անդորրագրեր</h2>
+      <p><b>Կանխավճար / վճարման անդորրագիր․</b> ${mediaLink(order.receipt_url,'բացել անդորրագիրը')}</p>
+      <p><b>Վերջնական վճարման անդորրագիր․</b> ${mediaLink(order.final_receipt_url,'բացել վերջնական անդորրագիրը')}</p>
+      ${order.receipt_url ? `<div style="margin-top:12px"><a href="${order.receipt_url}" target="_blank"><img src="${order.receipt_url}" onerror="this.style.display='none'" style="max-width:220px;max-height:260px;border-radius:14px;border:1px solid #eee;object-fit:cover"></a></div>` : ''}
+    </div>
+
+    <div class="pay-box">
+      <h2>Առաքման տվյալներ</h2>
+      <p><b>Ստացող․</b> ${order.recipient_name || ''}</p>
+      <p><b>Հեռախոս․</b> ${order.delivery_phone || ''}</p>
+      <p><b>Քաղաք / գյուղ․</b> ${order.delivery_city || ''}</p>
+      <p><b>Հասցե․</b> ${order.delivery_address || ''}</p>
+      <p><b>Ինդեքս․</b> ${order.postal_code || ''}</p>
+      <p><b>Նշում․</b> ${order.delivery_note || ''}</p>
+    </div>
+
+    <div class="pay-box">
+      <h2>Կարգավիճակ և վճարում</h2>
+
+      <label>Կարգավիճակ
+        <select id="status">
+          ${[
+            'Նոր պատվեր',
+            'Տվյալները ստացվել են',
+            'Հեքիաթը գրվում է',
+            'Իլյուստրացիաների փուլ',
+            'Դիզայնի փուլ',
+            'Տպագրություն',
+            'Պատրաստ է',
+            'Առաքում',
+            'Առաքված',
+            'Ավարտված'
+          ].map(s => `<option ${s === (order.status || '') ? 'selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </label>
+
+      <label>Վճարված գումար
+        <input id="paid" type="number" value="${order.paid_amount || 0}">
+      </label>
+
+      <label>Մնացորդ / վերջնական վճարման գումար
+        <input id="remaining_amount" type="number" value="${order.remaining_amount ?? Math.max(Number(order.price || 0) - Number(order.deposit_amount || 0), 0)}">
+      </label>
+      <p><b>Ընդհանուր․</b> ${money(order.price)}</p>
+      <p><b>Մնացած․</b> ${money(order.remaining_amount ?? Math.max(Number(order.price || 0) - Number(order.paid_amount || 0), 0))}</p>
+      <p><b>Վճարման վիճակ․</b> ${order.payment_status || 'Չհաստատված'}</p>
+      <button class="mini-btn" onclick="approveDeposit()">✅ Հաստատել վճարումը / կանխավճարը</button>
+      <button class="mini-btn" onclick="approveFinal()">✅ Հաստատել վերջնական վճարումը</button>
+    </div>
+
+    <div class="pay-box">
+      <h2>Ֆայլեր հաճախորդի համար</h2>
+
+      <label>Upload PDF
+        <input id="pdfFile" type="file" accept="application/pdf">
+      </label>
+
+      <button class="mini-btn" onclick="uploadFile('pdfs','pdfFile','pdf_url')">
+        Upload PDF
+      </button>
+
+      <p><b>PDF:</b> ${order.pdf_url ? `<a href="${order.pdf_url}" target="_blank">բացել</a>` : 'չկա'}</p>
+
+      <hr>
+
+      <label>Upload Preview image
+        <input id="previewFile" type="file" accept="image/*">
+      </label>
+
+      <button class="mini-btn" onclick="uploadFile('previews','previewFile','preview_url')">
+        Upload Preview
+      </button>
+
+      <p><b>Preview:</b> ${order.preview_url ? `<a href="${order.preview_url}" target="_blank">բացել</a>` : 'չկա'}</p>
+
+      <hr>
+
+      <label>YouTube Unlisted մուլտֆիլմի հղում
+        <input id="video_url" value="${order.video_url || ''}" placeholder="https://youtu.be/...">
+      </label>
+
+      <label>NFC հղում
+        <input id="nfc_url" value="${order.nfc_url || order.video_url || ''}" placeholder="https://youtu.be/...">
+      </label>
+    </div>
+
+    <div class="pay-box">
+      <h2>Առաքում</h2>
+
+      <label>Առաքման ընկերություն
+        <input id="delivery_company" value="${order.delivery_company || ''}" placeholder="ՀայՓոստ / Onex / Globbing">
+      </label>
+
+      <label>Tracking code
+        <input id="tracking_code" value="${order.tracking_code || ''}">
+      </label>
+
+      <label>Նշում ադմինի համար
+        <textarea id="admin_note">${order.admin_note || ''}</textarea>
+      </label>
+    </div>
+
+    <button class="btn" onclick="saveOrder()">Պահպանել փոփոխությունները</button>
+  `;
+}
+
+async function uploadFile(bucket, inputId, column){
+  const input = document.getElementById(inputId);
+  const file = input?.files?.[0];
+
+  if(!file){
+    alert('Ընտրեք ֆայլը');
+    return;
+  }
+
+  if(!order || !order.id){
+    alert('Պատվերը չի գտնվել');
+    return;
+  }
+
+  const fileName = `${Date.now()}-${safeName(file.name)}`;
+  const folder = `order-${order.id}`;
+  const path = `${folder}/${fileName}`;
+
+  console.log('UPLOAD START', { bucket, folder, fileName, path, file });
+
+  const uploadResult = await aramazdClient.storage
+    .from(bucket)
+    .upload(path, file, {
+      cacheControl: '3600',
+      upsert: true,
+      contentType: file.type || undefined
+    });
+
+  console.log('UPLOAD RESULT', uploadResult);
+
+  if(uploadResult.error){
+    alert('Upload սխալ․ ' + uploadResult.error.message);
+    return;
+  }
+
+  const listResult = await aramazdClient.storage
+    .from(bucket)
+    .list(folder);
+
+  console.log('LIST RESULT', listResult);
+
+  if(listResult.error){
+    alert('Storage list սխալ․ ' + listResult.error.message);
+    return;
+  }
+
+  const exists = (listResult.data || []).some(item => item.name === fileName);
+
+  if(!exists){
+    alert('Ֆայլը Storage-ում չգտնվեց upload-ից հետո');
+    return;
+  }
+
+  const publicResult = aramazdClient.storage
+    .from(bucket)
+    .getPublicUrl(path);
+
+  const publicUrl = publicResult?.data?.publicUrl;
+
+  console.log('PUBLIC URL', publicUrl);
+
+  if(!publicUrl){
+    alert('Public URL չի ստեղծվել');
+    return;
+  }
+
+  const updateResult = await aramazdClient
+    .from('orders')
+    .update({ [column]: publicUrl })
+    .eq('id', order.id)
+    .select()
+    .single();
+
+  console.log('DB UPDATE RESULT', updateResult);
+
+  if(updateResult.error){
+    alert('DB սխալ․ ' + updateResult.error.message);
+    return;
+  }
+
+  order = updateResult.data;
+  alert('Ֆայլը կցվեց ✅');
+  renderOrder();
+}
+
+async function saveOrder(){
+  const paid = Number(document.getElementById('paid').value || 0);
+
+  let payment_status = 'Չհաստատված';
+
+  if(paid > 0 && paid < Number(order.price || 0)){
+    payment_status = 'Կանխավճար ստացված';
+  }
+
+  if(paid >= Number(order.price || 0)){
+    payment_status = 'Ամբողջությամբ վճարված';
+  }
+
+  const videoUrl = document.getElementById('video_url').value;
+  const nfcUrl = document.getElementById('nfc_url').value || videoUrl;
+
+  const updates = {
+    status: document.getElementById('status').value,
+    paid_amount: paid,
+    remaining_amount: Number(document.getElementById('remaining_amount')?.value || 0),
+    payment_status: payment_status,
+    video_url: videoUrl,
+    nfc_url: nfcUrl,
+    delivery_company: document.getElementById('delivery_company').value,
+    tracking_code: document.getElementById('tracking_code').value,
+    admin_note: document.getElementById('admin_note').value
+  };
+
+  const { error } = await aramazdClient
+    .from('orders')
+    .update(updates)
+    .eq('id', order.id);
+
+  if(error){
+    alert('Սխալ․ ' + error.message);
+    return;
+  }
+
+  alert('Պահպանվեց ✅');
+  await loadOrder();
+}
+
+
+async function approveDeposit(){
+  const paid = Number(order.deposit_amount || 0);
+  const {error}=await aramazdClient.from('orders').update({paid_amount:paid,payment_status:'Կանխավճարը հաստատված է'}).eq('id',order.id);
+  if(error){alert('Սխալ․ '+error.message);return;} alert('Հաստատվեց ✅'); await loadOrder();
+}
+async function approveFinal(){
+  const {error}=await aramazdClient.from('orders').update({final_payment_status:'Վերջնական վճարումը հաստատված է',payment_status:'Ամբողջությամբ վճարված',paid_amount:Number(order.price||0),remaining_amount:0}).eq('id',order.id);
+  if(error){alert('Սխալ․ '+error.message);return;} alert('Վերջնական վճարումը հաստատվեց ✅'); await loadOrder();
+}
+
+async function logoutAdmin(){
+  await aramazdClient.auth.signOut();
+  location.href = 'login.html';
+}
+
+document.addEventListener('DOMContentLoaded', checkAdmin);
+</script>
+
+</body>
+</html>

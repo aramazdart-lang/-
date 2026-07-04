@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Գրանցվել | Aramazd Art</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html"><img src="assets/logo/aramazd-logo.png" alt="Aramazd Art"></a>
+  <nav class="nav"><a href="index.html">Գլխավոր</a><a href="products.html">Ապրանքներ</a><a href="how-it-works.html">Ինչպես է աշխատում</a><a href="contact.html">Կապ</a></nav>
+  <div class="actions"><a class="login" href="login.html">Մուտք</a><a class="btn small" href="register.html">Գրանցվել</a></div>
+</header>
+<main class="auth-page">
+  <div class="auth-card">
+    <img src="assets/logo/aramazd-logo.png" alt="Aramazd Art" style="width:90px;margin-bottom:10px">
+    <h1>Ստեղծել հաշիվ</h1>
+    <p>Գրանցվելուց հետո կկարողանաք տեսնել ձեր պատվերները, վճարումները և պատրաստման փուլերը։</p>
+    <input id="fullName" type="text" placeholder="Անուն Ազգանուն">
+    <input id="phone" type="tel" placeholder="Հեռախոսահամար">
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Գաղտնաբառ">
+    <button id="authBtn" class="btn" onclick="registerUser()">Գրանցվել</button>
+    <p>Արդեն ունե՞ք հաշիվ։ <a id="loginLink" href="login.html">Մուտք գործել</a></p>
+  </div>
+</main>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+const next = new URLSearchParams(location.search).get('next');
+if(next){
+  const encoded = encodeURIComponent(next);
+  document.getElementById('loginLink').href = 'login.html?next=' + encoded;
+  document.querySelectorAll('a[href="login.html"]').forEach(a=>a.href='login.html?next=' + encoded);
+}
+// Գրանցվելուց հետո օգտատերը վերադառնում է նույն պատվերի շարունակությանը։
+</script>
+</body>
+</html>

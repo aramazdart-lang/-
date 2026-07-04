@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ապրանքներ | Aramazd Art</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@700;900&family=Noto+Sans+Armenian:wght@400;600;700;900&display=swap');
+:root{--bg:#fbf7ef;--paper:#fffaf2;--navy:#08294f;--gold:#e1a72f;--muted:#667184;--line:rgba(8,41,79,.12)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--navy);font-family:"Noto Sans Armenian",Arial,sans-serif}
+.header{height:92px;background:rgba(255,250,242,.96);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 56px;position:sticky;top:0;z-index:5}
+.logo{height:68px;max-width:170px;object-fit:contain}
+.nav{display:flex;gap:32px;font-weight:900}.nav a{text-decoration:none;color:var(--navy)}
+.btn{background:var(--gold);color:var(--navy);padding:15px 28px;border-radius:999px;text-decoration:none;font-weight:900}
+main{width:min(1320px,calc(100% - 48px));margin:60px auto}
+.head{text-align:center;max-width:850px;margin:0 auto 46px}
+.head span{color:var(--gold);font-weight:900;letter-spacing:.16em}.head h1{font-family:"Noto Serif Armenian";font-size:clamp(44px,6vw,74px);margin:12px 0}.head p{color:var(--muted);font-size:18px;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:30px;padding:30px;min-height:310px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:var(--navy);box-shadow:0 18px 45px rgba(8,41,79,.06);transition:.2s}
+.card:hover{transform:translateY(-6px);border-color:var(--gold)}
+.icon{font-size:48px}.card h2{font-family:"Noto Serif Armenian";font-size:30px;margin:18px 0 8px}.card p{color:var(--muted);line-height:1.7}.card b{color:var(--gold)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.nav{display:none}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.header{padding:14px 20px;height:auto}.logo{height:56px}}
+</style>
+</head>
+<body>
+<header class="header">
+  <a href="index.html"><img class="logo" src="assets/logo.png" alt="Aramazd Art"></a>
+  <nav class="nav">
+    <a href="index.html">Գլխավոր</a>
+    <a href="products.html">Ապրանքներ</a>
+    <a href="account/index.html">Իմ հաշիվը</a>
+    <a href="contact.html">Կապ</a>
+  </nav>
+  <a class="btn" href="login.html">Մուտք / Գրանցում</a>
+</header>
+<main>
+  <div class="head">
+    <span>ARAMAZD ART</span>
+    <h1>Ընտրեք ապրանքը</h1>
+    <p>Սեղմեք քարտի վրա, և ավտոմատ կտեղափոխվեք տվյալ պատվերի էջ։</p>
+  </div>
+  <div class="grid">
+    <a class="card" href="fairytale/index.html"><div><div class="icon">📚</div><h2>Հեքիաթային գիրք</h2><p>Անհատական կամ պատրաստի հեքիաթ երեխայի մասնակցությամբ։</p></div><b>Պատվիրել →</b></a>
+    <a class="card" href="photoalbum/index.html"><div><div class="icon">📖</div><h2>Ֆոտոալբոմ</h2><p>Կոշտ, փափուկ կամ զսպանակով ալբոմ՝ NFC համակարգով։</p></div><b>Պատվիրել →</b></a>
+    <a class="card" href="color-yourself/index.html"><div><div class="icon">🎨</div><h2>Ներկիր ինքդ քեզ</h2><p>Երեխայի լուսանկարները դառնում են գծային գունազարդման էջեր։</p></div><b>Պատվիրել →</b></a>
+    <a class="card" href="artbook/index.html"><div><div class="icon">🖍️</div><h2>ArtBook</h2><p>Երեխայի նկարած նկարներից պատրաստվող գիրք՝ հեքիաթով կամ առանց։</p></div><b>Պատվիրել →</b></a>
+  </div>
+</main>
+</body>
+</html>

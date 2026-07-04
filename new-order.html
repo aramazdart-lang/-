@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Նոր պատվեր | Aramazd Art</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html"><img src="assets/logo/aramazd-logo.png" alt="Aramazd Art"></a>
+  <nav class="nav"><a href="index.html">Գլխավոր</a><a href="products.html">Ապրանքներ</a><a href="how-it-works.html">Ինչպես է աշխատում</a><a href="about.html">Մեր մասին</a><a href="contact.html">Կապ</a></nav>
+  <div class="actions"><a class="login" href="login.html">Մուտք</a><a class="btn small" href="register.html">Գրանցվել</a></div>
+</header>
+<main>
+<section class="page-hero"><h1>Ստեղծեք ձեր պատվերը միասին</h1><p>Ընտրեք ապրանքը, մուտք գործեք և շարունակեք վճարման փուլը։</p></section>
+<section class="section order-wizard">
+  <div class="wizard-step active"><b>1</b><h3>Ընտրեք ապրանքը</h3><select id="product"><option value="Անհատական հեքիաթային գիրք" data-price="17000">Անհատական հեքիաթային գիրք</option><option value="Ֆոտոալբոմ" data-price="11000">Ֆոտոալբոմ</option><option value="ArtBook" data-price="9000">ArtBook</option><option value="Ներկիր ինքդ քեզ" data-price="3000">Ներկիր ինքդ քեզ</option><option value="NFC նվեր" data-price="8000">NFC նվեր</option></select></div>
+  <div class="wizard-step"><b>2</b><h3>Լրացրեք տվյալները</h3><input type="text" id="customer_name" placeholder="Անուն" style="width:100%;padding:12px;margin-bottom:10px;"><input type="text" id="phone" placeholder="Հեռախոսահամար" style="width:100%;padding:12px;margin-bottom:10px;"><textarea id="details" placeholder="Գրեք պատվերի մանրամասները..." style="width:100%;min-height:120px;"></textarea></div>
+  <button class="btn" id="submitOrder">Շարունակել վճարման փուլ</button>
+</section>
+</main>
+<footer class="site-footer"><div class="footer-bottom"><span>© 2026 ARAMAZD ART</span><span>Պատմություններ, որոնք դառնում են հիշողություններ</span><span>Ստեղծված Հայաստանում</span></div></footer>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/checkout.js"></script>
+<script>
+document.getElementById('submitOrder').addEventListener('click', async()=>{
+ const select=document.getElementById('product'); const opt=select.options[select.selectedIndex];
+ const product=opt.value; const price=Number(opt.dataset.price||0);
+ const customer_name=document.getElementById('customer_name').value.trim();
+ const phone=document.getElementById('phone').value.trim();
+ const notes=document.getElementById('details').value.trim();
+ if(!customer_name || !phone){alert('Լրացրեք անունն ու հեռախոսահամարը'); return;}
+ await AramazdCheckout.start({product, customer_name, phone, price, deposit: product==='Ներկիր ինքդ քեզ'?price:5000, details:{product_type:'manual',notes}}, {checkoutPath:'checkout.html', loginPath:'login.html'});
+});
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

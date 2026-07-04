@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ներկիր ինքդ քեզ | Aramazd Art</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <img src="assets/logo.png" class="logo" alt="Aramazd Art">
+  <nav><a href="../index.html">Գլխավոր</a><a href="../products.html">Ապրանքներ</a><a href="../products.html">Ներկիր ինքդ քեզ</a><a href="../contact.html">Կապ</a></nav>
+  <a href="#order" class="order-btn">Պատվիրել</a>
+</header>
+
+<section class="hero">
+  <div>
+    <span>ARAMAZD ART</span>
+    <h1>Ներկիր ինքդ քեզ</h1>
+    <p>Ուղարկում եք երեխայի լուսանկարները, մենք դրանք վերածում ենք գծային գունազարդման էջերի, իսկ երեխան ներկում է հենց ինքն իրեն։</p>
+    <div><a href="#order" class="btn">Սկսել պատվերը</a><a href="#how" class="btn ghost">Ինչպես է աշխատում</a></div>
+  </div>
+  <div class="visual"><div>📸</div><b>→</b><div>✏️</div><b>→</b><div>🎨</div></div>
+</section>
+
+<section id="how" class="steps">
+  <div><b>1</b><h3>Ուղարկում եք նկարները</h3><p>Կցում եք երեխայի 10 կամ 20 լուսանկար։</p></div>
+  <div><b>2</b><h3>Դարձնում ենք գծային</h3><p>Լուսանկարները վերածում ենք սև-սպիտակ գունազարդման էջերի։</p></div>
+  <div><b>3</b><h3>Տպում ենք ալբոմը</h3><p>Զսպանակով, անհատական կազմով։</p></div>
+  <div><b>4</b><h3>Երեխան ներկում է իրեն</h3><p>Ստացվում է ստեղծագործական ու անձնական նվեր։</p></div>
+</section>
+
+<main id="order" class="page">
+  <section class="builder">
+    <h2>Կազմեք ձեր ալբոմը</h2>
+
+    <h3>1. Ընտրեք չափը</h3>
+    <div class="cards two">
+      <label class="card active"><input type="radio" name="size" checked onchange="setSize('A5')"><b>A5</b><small>կոմպակտ և մատչելի</small></label>
+      <label class="card"><input type="radio" name="size" onchange="setSize('A4')"><b>A4</b><small>մեծ և արտահայտիչ</small></label>
+    </div>
+
+    <h3>2. Ընտրեք նկարների քանակը</h3>
+    <div class="cards two">
+      <label class="card active"><input type="radio" name="count" checked onchange="setCount(10)"><b>10 նկար</b><small>10 գունազարդման էջ</small></label>
+      <label class="card"><input type="radio" name="count" onchange="setCount(20)"><b>20 նկար</b><small>20 գունազարդման էջ</small></label>
+    </div>
+
+    <h3>3. Ընտրեք թղթի տեսակը</h3>
+    <div class="cards two">
+      <label class="card active"><input type="radio" name="paper" checked onchange="setPaper('normal')"><b>Սովորական թուղթ</b><small>մատիտներով ներկելու համար</small></label>
+      <label class="card"><input type="radio" name="paper" onchange="setPaper('watercolor')"><b>Ջրաներկի / գուաշի թուղթ</b><small>հաստ թուղթ գուաշի ու ջրաներկի համար</small></label>
+    </div>
+
+    <div class="include">
+      <h3>Ինչ է ներառված</h3>
+      <ul>
+        <li>Լուսանկարները վերածվում են գծային նկարների</li>
+        <li>Անհատական կազմ՝ երեխայի անունով</li>
+        <li>Սև-սպիտակ տպագրություն</li>
+        <li>Զսպանակով հավաքում</li>
+        <li>Անվճար փաթեթավորում և առաքում ՀՀ տարածքում</li>
+      </ul>
+    </div>
+
+    <h3>4. Կցեք երեխայի լուսանկարները</h3>
+    <label class="upload">
+      <span>☁️</span>
+      <b>Ընտրել նկարներ</b>
+      <small id="limitText">Պետք է կցել նվազագույնը 10 նկար</small>
+      <input type="file" id="photoUpload" multiple accept="image/*" onchange="handlePhotos(event)">
+    </label>
+    <div id="photoStatus" class="status">Կցված է 0 նկար</div>
+    <div id="thumbs" class="thumbs"></div>
+
+    <div class="rules">
+      <h3>Ինչպիսի նկարներ ուղարկել</h3>
+      <div><span>✅ դեմքը պարզ երևա</span><span>✅ լավ լուսավորություն</span><span>✅ բարձր որակ</span><span>✅ տարբեր դիրքեր</span><span>❌ մութ նկարներ</span><span>❌ փակ դեմք</span></div>
+    </div>
+
+    <label class="field">Երեխայի անունը կազմի համար
+      <input type="text" placeholder="օր․ Էվա">
+    </label>
+
+    <label class="field">Լրացուցիչ ցանկություններ
+      <textarea placeholder="Գրեք կազմի գույնը, անունը, հատուկ տեքստ կամ այլ ցանկություններ..."></textarea>
+    </label>
+
+    <div class="contact">
+      <h3>Ինչպե՞ս կապ հաստատենք ձեզ հետ անհրաժեշտության դեպքում</h3>
+      <label><input type="checkbox"> WhatsApp</label>
+      <label><input type="checkbox"> Telegram</label>
+      <label><input type="checkbox"> Հեռախոսազանգ</label>
+      <label><input type="checkbox"> Email</label>
+    </div>
+  </section>
+
+  <aside class="summary">
+    <h2>Պատվերի ամփոփում</h2>
+    <div class="row"><span>Չափ</span><b id="sumSize">A5</b></div>
+    <div class="row"><span>Նկարներ</span><b id="sumCount">10 նկար</b></div>
+    <div class="row"><span>Թուղթ</span><b id="sumPaper">Սովորական</b></div>
+    <hr>
+    <div class="total"><span>Ընդհանուր</span><b id="total">3,000 դր․</b></div>
+    <button onclick="submitOrder()">Ուղարկել պատվերը</button>
+    <p>Զսպանակով, անհատական կազմով։ Պատրաստման ժամկետը՝ 3–7 աշխատանքային օր։</p>
+  </aside>
+</main>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/checkout.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

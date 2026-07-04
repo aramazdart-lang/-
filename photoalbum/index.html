@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ֆոտոալբոմ | Aramazd Art</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <img class="logo" src="assets/logo.png" alt="Aramazd Art">
+  </div>
+  <nav>
+    <a href="../index.html">Գլխավոր</a>
+    <a href="../products.html">Ապրանքներ</a>
+    <a href="#order">Պատվեր</a>
+    <a href="../contact.html">Կապ</a>
+  </nav>
+  <a class="order-btn" href="#order">Պատվիրել</a>
+</header>
+
+
+<section class="photo-hero">
+  <div class="photo-hero-text">
+    <span>ARAMAZD ART</span>
+    <h1>Ֆոտոալբոմ</h1>
+    <p>Պահպանեք ձեր ամենաթանկ հիշողությունները գեղեցիկ, անհատական և բարձրորակ ալբոմի տեսքով։ Ընտրեք չափը, կազմի տեսակը, էջերի քանակը և վերբեռնեք լուսանկարները։</p>
+    <div class="actions">
+      <a href="#order" class="btn">Սկսել պատվերը</a>
+      <a href="#order" class="btn ghost">Տեսնել գները</a>
+    </div>
+  </div>
+  <div class="album-mockup">
+    <div class="book book-lg">21×30</div>
+    <div class="book book-md">18×25</div>
+    <div class="book book-sm">15×21</div>
+  </div>
+</section>
+
+<main id="order" class="page">
+  <section class="builder">
+    <h1>Ֆոտոալբոմ</h1>
+    <p class="intro">Ընտրեք կազմը, չափը և նկարների քանակը․ գինը կհաշվարկվի ավտոմատ։</p>
+
+    <div class="step">
+      <h2>1. Ընտրեք կազմի տեսակը</h2>
+      <div class="cards three">
+        <label class="card active">
+          <input type="radio" name="cover" checked onchange="setCover('hard')">
+          <span class="icon">📖</span>
+          <b>Կոշտ կազմ</b>
+          <small>NFC համակարգը ներառված է</small>
+        </label>
+        <label class="card">
+          <input type="radio" name="cover" onchange="setCover('soft')">
+          <span class="icon">▱</span>
+          <b>Փափուկ կազմ</b>
+          <small>թեթև և մատչելի տարբերակ</small>
+        </label>
+        <label class="card">
+          <input type="radio" name="cover" onchange="setCover('spring')">
+          <span class="icon">⌁</span>
+          <b>Զսպանակով</b>
+          <small>հարմար և գործնական տարբերակ</small>
+        </label>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2>2. Ընտրեք չափը</h2>
+      <div class="cards four">
+        <label class="card"><input type="radio" name="size" onchange="setSize('15x21')"><b>15×21 սմ</b></label>
+        <label class="card active"><input type="radio" name="size" checked onchange="setSize('18x25')"><b>18×25 սմ</b></label>
+        <label class="card"><input type="radio" name="size" onchange="setSize('21x30')"><b>21×30 սմ</b></label>
+        <label class="card"><input type="radio" name="size" onchange="setSize('10x15')"><b>10×15 սմ</b><small>միայն զսպանակով</small></label>
+      </div>
+    </div>
+
+    <div class="step" id="normalAlbum">
+      <h2>3. Ընտրեք նկարների քանակը</h2>
+      <div class="cards five">
+        <label class="card active"><input type="radio" name="range" checked onchange="setRange('20-40')"><b>20–40 նկար</b><small>մոտ 15–25 էջ</small></label>
+        <label class="card"><input type="radio" name="range" onchange="setRange('40-70')"><b>40–70 նկար</b><small>մոտ 30–40 էջ</small></label>
+        <label class="card"><input type="radio" name="range" onchange="setRange('60-100')"><b>60–100 նկար</b><small>մոտ 45–55 էջ</small></label>
+        <label class="card"><input type="radio" name="range" onchange="setRange('80-150')"><b>80–150 նկար</b><small>մոտ 65–85 էջ</small></label>
+        <label class="card"><input type="radio" name="range" onchange="setRange('100-250')"><b>100–250 նկար</b><small>մոտ 85–115 էջ</small></label>
+      </div>
+    </div>
+
+    <div class="step hidden" id="smallAlbum">
+      <h2>3. 10×15 սմ զսպանակով ալբոմ</h2>
+      <div class="cards two">
+        <label class="card active"><input type="radio" name="paper" checked onchange="setPaper('normal')"><b>Սովորական ֆոտոթուղթ</b><small>130 դր․ / նկար</small></label>
+        <label class="card"><input type="radio" name="paper" onchange="setPaper('satin')"><b>Satin ֆոտոթուղթ</b><small>170 դր․ / նկար</small></label>
+      </div>
+      <label class="field">Նկարների քանակը
+        <input type="number" id="smallCount" min="1" value="30" oninput="updateTotal()">
+      </label>
+    </div>
+
+    <div class="nfc" id="nfcBox">
+      <div class="nfc-icon">NFC</div>
+      <div>
+        <h2>✨ NFC հիշողությունների համակարգ</h2>
+        <p>Կոշտ կազմով ֆոտոալբոմի արժեքի մեջ ներառված է NFC համակարգը։ Ալբոմին հպելիս կարող է բացվել տեսանյութ, շնորհավորանք կամ հիշողությունների հոլովակ։</p>
+      </div>
+      <div class="video-options">
+        <label><input type="radio" name="video" checked> Կկցեմ տեսանյութը հիմա</label>
+        <label><input type="radio" name="video"> Կուղարկեմ ավելի ուշ</label>
+      </div>
+      <label class="video-upload">Կցել տեսանյութ
+        <input type="file" accept="video/*">
+      </label>
+    </div>
+
+    <div class="step">
+      <h2>4. Վերբեռնեք ձեր նկարները</h2>
+      <label class="upload">
+        <span>☁️</span>
+        <b>Քաշեք և գցեք նկարները այստեղ կամ ընտրեք ֆայլեր</b>
+        <small id="limitText">Այս փաթեթի համար՝ 20–40 նկար • մոտ 15–25 էջ</small>
+        <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotos(event)">
+      </label>
+      <div class="status" id="photoStatus">Կցված է 0 նկար</div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <div class="step">
+      <h2>5. Ալբոմի ոճը</h2>
+      <div class="checks">
+        <label><input type="checkbox"> Մանկական</label>
+        <label><input type="checkbox"> Ընտանեկան</label>
+        <label><input type="checkbox"> Ծննդյան</label>
+        <label><input type="checkbox"> Մկրտության</label>
+        <label><input type="checkbox"> Ճամփորդական</label>
+        <label><input type="checkbox"> Ազատ ձևավորում</label>
+      </div>
+    </div>
+
+    <label class="field">Լրացուցիչ ցանկություններ
+      <textarea placeholder="Գրեք հատուկ տեքստեր, ամսաթվեր, գույներ կամ այլ ցանկություններ..."></textarea>
+    </label>
+
+    <div class="contact">
+      <h2>Ինչպե՞ս կապ հաստատենք ձեզ հետ անհրաժեշտության դեպքում</h2>
+      <label><input type="checkbox"> WhatsApp</label>
+      <label><input type="checkbox"> Telegram</label>
+      <label><input type="checkbox"> Հեռախոսազանգ</label>
+      <label><input type="checkbox"> Email</label>
+    </div>
+  </section>
+
+  <aside class="summary">
+    <h2>Պատվերի ամփոփում</h2>
+    <div class="row"><span>Կազմ</span><b id="sumCover">Կոշտ կազմ</b></div>
+    <div class="row"><span>Չափ</span><b id="sumSize">18×25 սմ</b></div>
+    <div class="row"><span>Նկարներ</span><b id="sumRange">20–40 նկար</b></div>
+    <div class="row"><span>Էջեր</span><b id="sumPages">մոտ 15–25 էջ</b></div>
+    <div class="row"><span>NFC</span><b id="sumNfc">ներառված</b></div>
+    <hr>
+    <div class="total"><span>Ընդհանուր</span><b id="total">11,000 դր․</b></div>
+    <button onclick="submitOrder()">Ավելացնել պատվերը</button>
+    <p class="safe">100% գործնականության երաշխիք</p>
+  </aside>
+</main>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/checkout.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

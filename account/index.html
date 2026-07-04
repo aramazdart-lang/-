@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Իմ հաշիվը | Aramazd Art</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="account-top-nav">
+  <a href="../index.html">
+    <img src="../assets/logo/aramazd-logo.png" alt="Aramazd Art">
+  </a>
+  <nav>
+    <a href="../index.html">Գլխավոր</a>
+    <a href="../products.html">Ապրանքներ</a>
+    <a href="../how-it-works-clean.html">Ինչպես է աշխատում</a>
+    <a href="../contact.html">Կապ</a>
+  </nav>
+  <a class="account-pill" href="../products.html">Նոր պատվեր</a>
+</header>
+
+<aside class="sidebar">
+  <div class="brand">
+    <img class="logo" src="../assets/logo/aramazd-logo-white.png" alt="Aramazd Art">
+  </div>
+
+  <nav class="menu">
+    <button class="active" data-page="dashboard">🏠 Dashboard</button>
+    <button data-page="orders">📦 Իմ պատվերները</button>
+    <button data-page="library">📚 Իմ գրադարանը</button>
+    <button data-page="payments">💳 Վճարումներ</button>
+    <button data-page="profile">⚙️ Իմ տվյալները</button>
+    <a class="admin-link" id="adminLink" href="../admin.html" style="display:none">👑 Admin Panel</a>
+  </nav>
+
+  <button class="logout" onclick="logoutAccount()">Դուրս գալ</button>
+</aside>
+
+<main class="main">
+  <header class="top">
+    <div>
+      <span>ARAMAZD ART</span>
+      <h1 id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="user">
+      <div class="avatar" id="avatar">Ա</div>
+      <div>
+        <b id="userName">Բեռնվում է...</b>
+        <small id="userEmail"></small>
+      </div>
+    </div>
+  </header>
+
+  <section class="page active" id="dashboard">
+    <div class="stats">
+      <div><b id="statAll">0</b><span>Ընդհանուր պատվեր</span></div>
+      <div><b id="statActive">0</b><span>Ակտիվ պատվեր</span></div>
+      <div><b id="statDone">0</b><span>Ավարտված</span></div>
+      <div><b id="statDebt">0 դր․</b><span>Մնացած վճարում</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel wide">
+        <h2>Վերջին պատվեր</h2>
+        <div id="activeOrderBox">Բեռնվում է...</div>
+      </div>
+      <div class="panel">
+        <h2>Վճարում</h2>
+        <div id="paymentBox">Բեռնվում է...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="orders">
+    <div class="section-head">
+      <h2>Իմ պատվերները</h2>
+      <p>Այստեղ երևում են ձեր պատվերները և ընթացքը։</p>
+    </div>
+    <div class="orders-list" id="ordersList"></div>
+    <div class="panel order-details" id="orderDetails">
+      <h2>Ընտրեք պատվեր</h2>
+      <p>Պատվերի մանրամասները կերևան այստեղ։</p>
+    </div>
+  </section>
+
+  <section class="page" id="library">
+    <div class="section-head">
+      <h2>Իմ գրադարանը</h2>
+      <p>Այստեղ կտեսնեք ձեր PDF գիրքը, preview-ն, մուլտֆիլմը և NFC հղումը։</p>
+    </div>
+    <div class="library-grid" id="libraryGrid">
+      <div class="file-card">
+        <div class="file-icon">📁</div>
+        <h3>Դեռ ֆայլեր չկան</h3>
+        <p>Պատրաստ ֆայլերը կցվելու են պատվերի ավարտին։</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="payments">
+    <div class="section-head">
+      <h2>Վճարումներ</h2>
+      <p>Կանխավճարներ, մնացած գումարներ և վճարման պատմություն։</p>
+    </div>
+    <div class="payment-layout" id="paymentsList"></div>
+  </section>
+
+  <section class="page" id="profile">
+    <div class="section-head">
+      <h2>Իմ տվյալները</h2>
+      <p>Այս տվյալները օգտագործվում են պատվերների և առաքման համար։</p>
+    </div>
+    <div class="profile-form">
+      <label>Անուն Ազգանուն<input id="profileName"></label>
+      <label>Email<input id="profileEmail" disabled></label>
+      <label>Հեռախոս<input id="profilePhone"></label>
+      <label>Քաղաք / Գյուղ<input id="profileCity" placeholder="օր․ Ոսկեպար"></label>
+      <label>Հասցե<input id="profileAddress" placeholder="փողոց, տուն, բնակարան"></label>
+      <label>Փոստային ինդեքս<input id="profileIndex" placeholder="4114"></label>
+      <button onclick="saveProfile()">Պահպանել</button>
+    </div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

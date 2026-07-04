@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Հեքիաթային գիրք | Aramazd Art</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <img src="assets/logo.png" class="logo">
+  <nav><a href="../index.html">Գլխավոր</a><a href="../products.html">Ապրանքներ</a><a>Պատրաստի հեքիաթներ</a><a href="../contact.html">Կապ</a></nav>
+  <a class="header-btn" href="#order">Պատվիրել</a>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <span class="label">ARAMAZD ART</span>
+    <h1>Հեքիաթային գիրք</h1>
+    <p>Երեխան դառնում է իր սեփական հեքիաթի գլխավոր հերոսը։ Ընտրեք պատրաստի հեքիաթ կամ պատվիրեք ամբողջությամբ անհատական տարբերակ՝ երեխայի լուսանկարներով։</p>
+    <div class="hero-actions"><a href="#templates" class="btn">Ընտրել հեքիաթը</a><a href="#order" class="btn ghost">Սկսել պատվերը</a></div>
+  </div>
+  <div class="book-cover"><span>📖</span><h3>Քո երեխայի<br>հեքիաթը</h3></div>
+</section>
+
+<section class="info-strip">
+  <div><b>18×25 սմ</b><span>գրքի չափս</span></div>
+  <div><b>10 էջ</b><span>5 թերթ</span></div>
+  <div><b>Կոշտ կազմ</b><span>պրեմիում տեսք</span></div>
+  <div><b>7–12 օր</b><span>պատրաստում</span></div>
+</section>
+
+<section id="prices" class="section">
+  <div class="section-head"><span>Ընտրեք տարբերակը</span><h2>Գրքի տեսակները</h2></div>
+  <div class="pricing-grid">
+    <div class="price-card plan-card" data-mode="ready"><h3>Պատրաստի գիրք</h3><p>Պատրաստի հեքիաթ և նկարազարդումներ՝ երեխայի լուսանկարներով։</p><strong>9,500 դր․</strong><button type="button" onclick="selectPlan('Պատրաստի գիրք',9500,'ready',this)">Ընտրել</button></div>
+    <div class="price-card plan-card" data-mode="ready"><h3>Պատրաստի գիրք + NFC</h3><p>Պատրաստի գիրք՝ մուլտֆիլմային թվային տարբերակով։</p><strong>11,000 դր․</strong><button type="button" onclick="selectPlan('Պատրաստի գիրք + NFC',11000,'ready',this)">Ընտրել</button></div>
+    <div class="price-card plan-card" data-mode="custom"><h3>Անհատական գիրք</h3><p>Հեքիաթը ստեղծվում է երեխայի հետաքրքրությունների հիման վրա։</p><strong>14,500 դր․</strong><button type="button" onclick="selectPlan('Անհատական գիրք',14500,'custom',this)">Ընտրել</button></div>
+    <div class="price-card featured plan-card selected-plan" data-mode="custom"><div class="badge">Առաջարկվող</div><h3>Անհատական գիրք + NFC</h3><p>Անհատական հեքիաթ և մուլտֆիլմային տարբերակ NFC-ով։</p><strong>17,000 դր․</strong><button type="button" onclick="selectPlan('Անհատական գիրք + NFC',17000,'custom',this)">Ընտրել</button></div>
+  </div>
+</section>
+
+<section id="templates" class="section templates-section order-mode ready-mode hidden">
+  <div class="section-head">
+    <span>Պատրաստի հեքիաթներ</span>
+    <h2>Ընտրեք հեքիաթի տարբերակը</h2>
+    <p>Կարդացեք հեքիաթի կարճ հատվածը, նայեք մաքուր preview պատկերները և ընտրեք այն տարբերակը, որը ցանկանում եք պատվիրել։</p>
+  </div>
+
+  <div class="template-grid">
+    <article class="template-card" data-story-id="two-suns" onclick="selectTemplate('Երկու արև և մեկ մեծ սեր', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/two-suns.webp" alt="Երկու արև և մեկ մեծ սեր"></div>
+      <h3>Երկու արև և մեկ մեծ սեր</h3>
+      <p>Մի արևոտ օր, երբ Մարտան և Մարիան խաղում էին այգում, նրանց դիմաց հայտնվեց մի անսովոր ոսկեգույն թիթեռ։ Այն կարծես ինչ-որ տեղ էր կանչում նրանց... Աղջիկները հետևեցին նրան՝ չիմանալով, որ ընդամենը մի քանի քայլ հետո իրենց կյանքում սկսվելու էր մի կախարդական պատմություն, որը փոխելու էր ամեն ինչ…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="found-dream" onclick="selectTemplate('Գտնված երազ', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/found-dream.webp" alt="Գտնված երազ"></div>
+      <h3>Գտնված երազ</h3>
+      <p>Գիշերը գալիս է շատ դանդաղ, կարծես վախենում է արթնացնել աշխարհը։ Պատուհանից ներս է սահում լուսնի փափուկ լույսը, իսկ փոքրիկ Անգելինան նստած է անկողնում ու գիրք է կարդում գունավոր թիթեռների մասին։ Բայց երբ պապիկը խոստովանում է, որ վաղուց կորցրել է իր քունը, Անգելինայի սրտում ծնվում է մի ցանկություն, որը նրան տանելու է մի կախարդական ճանապարհորդության…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="eduard" onclick="selectTemplate('Էդուարդի առաջին քաջությունը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/eduard.webp" alt="Էդուարդի առաջին քաջությունը"></div>
+      <h3>Էդուարդի առաջին քաջությունը</h3>
+      <p>Մի լուսավոր առավոտ արևի շողերը մեղմ սահում են Էդուարդի սենյակի պատուհանից ներս։ Նա հպարտությամբ հագնում է իր կարմիր հրշեջ գլխարկն ու փոքրիկ ուսապարկը՝ պատրաստ լինելով նոր արկածների։ Սակայն նա դեռ չգիտեր, որ հենց այդ օրը մի փոքրիկ օգնության կանչ իրեն ու եղբորը՝ Դավիթին, տանելու էր մի փորձության, որտեղ պետք էր ցույց տալ իսկական քաջությունը…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="emila" onclick="selectTemplate('Էմիլան և կախարդական լիճը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/emila.webp" alt="Էմիլան և կախարդական լիճը"></div>
+      <h3>Էմիլան և կախարդական լիճը</h3>
+      <p>Լուսաբացի մեղմ շողերը կամաց սահում են պատուհանի միջով ու լցվում փոքրիկ Էմիլիայի սենյակը։ Այսօր ինչ-որ յուրահատուկ օր է․ նրա սիրտը լի է սպասումով, կարծես նոր արկած է սպասվում։ Սակայն նա դեռ չգիտեր, որ մի կախարդական լիճ, որը զգում է մարդկանց սրտերը, պատրաստվում էր կանչել իրեն և փորձության ենթարկել նրա խիզախությունն ու հավատը…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="lea" onclick="selectTemplate('Լեայի բարի օրը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/lea.webp" alt="Լեայի բարի օրը"></div>
+      <h3>Լեայի բարի օրը</h3>
+      <p>Առավոտը բացվում է խաղաղ ու լուսավոր։ Արևի ոսկեգույն շողերը մեղմ սահում են պատուհանից ներս և լուսավորում Լեայի փոքրիկ սենյակը։ Հենց այդ օրը, երբ օրացույցում կարմիրով նշված ամսաթիվն էր, օդում հնչում է մի խորհրդավոր ձայն, և նրա առջև հայտնվում է փոքրիկ փերին։ Բայց Լեան դեռ չգիտեր, որ այդ կախարդական հանդիպումը նրան տանելու էր մի բարի արկածի, որտեղ յուրաքանչյուր քայլը դառնալու էր իսկական փորձություն…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="mariam" onclick="selectTemplate('Մարիամի լուսավոր օրը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/mariam.webp" alt="Մարիամի լուսավոր օրը"></div>
+      <h3>Մարիամի լուսավոր օրը</h3>
+      <p>Արևի ոսկեգույն շողերը կամաց-կամաց սահում են դպրոցի լուսավոր դասասենյակով, իսկ Մարիամը հուզմունքով պատրաստվում է ավարտել իր ամենակարևոր նկարը՝ այն, որը ներկայացվելու է ցուցադրությանը։ Նա վստահ է, որ այս անգամ ամեն ինչ պետք է ստացվի... բայց հենց առաջին վրձնահարվածներից հետո հասկանում է, որ իրեն սպասում է մի փորձություն, որը կփոխի ոչ միայն իր նկարը, այլև ինքն իրեն…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="miqayel" onclick="selectTemplate('Միքայելի փոքրիկ արկածը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/miqayel.webp" alt="Միքայելի փոքրիկ արկածը"></div>
+      <h3>Միքայելի փոքրիկ արկածը</h3>
+      <p>Առավոտյան արևի մեղմ շողերը սահում են պատուհանի միջով ու լուսավորում Միքայելի սենյակը։ Այսօր նա որոշել է ինքնուրույն բացահայտել աշխարհը՝ քայլել դեպի քաղաքի այգին, լսել նրա ձայները և զգալ, թե ինչ է նշանակում պատասխանատու լինել։ Բայց Միքայելը դեռ չգիտեր, որ այդ սովորական զբոսանքը շուտով վերածվելու էր մի փոքրիկ, բայց կարևոր արկածի, որը նրան նորովի էր սովորեցնելու սիրել ու գնահատել իր հայրենիքը…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="qajik" onclick="selectTemplate('Խիզախ Քաջիկն ու փոքրիկ արկածը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/qajik.webp" alt="Խիզախ Քաջիկն ու փոքրիկ արկածը"></div>
+      <h3>Խիզախ Քաջիկն ու փոքրիկ արկածը</h3>
+      <p>Արևը նոր է բարձրանում, և իր ոսկեգույն շողերը մեղմ լցվում են Քաջիկի սենյակ։ Այսօր նա իրեն ուժեղ ու համարձակ է զգում և որոշում է սկսել օրը փոքրիկ առավոտյան վազքով։ Բայց նա դեռ չգիտեր, որ այդ սովորական առավոտը շուտով վերածվելու էր մի անսպասելի արկածի, որտեղ ամենակարևորը լինելու էր ոչ թե ուժը, այլ քաջությունը, պատասխանատվությունն ու փոքրիկ քրոջը պաշտպանելու պատրաստակամությունը…</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="lana" onclick="selectTemplate('Լանայի լուսավոր օրը', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/lana.webp" alt="Լանայի լուսավոր օրը"></div>
+      <h3>Լանայի լուսավոր օրը</h3>
+      <p>Մի լուսավոր առավոտ է բացվում։ Արևի մեղմ շողերը սահում են Լանայի սենյակի պատերով, իսկ նրա սրտում մի քաղցր սպասում կա․ ընդամենը մի քանի օրից նա դառնալու է յոթ տարեկան։ Նա դեռ չգիտեր, որ մինչև այդ սպասված օրը մի փոքրիկ անակնկալ, մեկ սխալ որոշում և մեկ կարևոր ընտրություն կօգնեն նրան բացահայտել, թե ինչքան մեծ ուժ ունի ազնվությունն ու անկեղծությունը...</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+    <article class="template-card" data-story-id="godzila" onclick="selectTemplate('Անտառում կորած Գոձիլան', this)">
+      <div class="preview story-cover"><img src="../assets/fairytales/covers/godzila.webp" alt="Անտառում կորած Գոձիլան"></div>
+      <h3>Անտառում կորած Գոձիլան</h3>
+      <p>Ամառվա պայծառ առավոտ է։ Տանը ամեն ինչ խաղաղ է, իսկ արևի շողերը ոսկեգույն լույսով լցնում են սենյակը։ Հինգ տարեկան Արմենը պատրաստվում է իր ամենակարևոր «հետախուզական առաքելությանը»՝ ուսապարկը հավաքած, հեռադիտակը ձեռքին և սիրելի փոքրիկ Գոձիլայի հետ։ Բայց նա դեռ չգիտեր, որ այդ օրը անտառի խորքում իրեն սպասում էր մի անհավանական հանդիպում, որը կվերածեր սովորական զբոսանքը իսկական արկածի...</p>
+      <button>Ընտրել այս հեքիաթը</button>
+    </article>
+  </div>
+</section>
+
+<section class="section photo-section">
+  <div class="section-head"><span>Լուսանկարների պահանջներ</span><h2>Ինչպիսի նկարներ ուղարկել</h2><p>Քանի որ ընտրված հեքիաթի նկարազարդումներում դիրքերը արդեն պատրաստ են, մենք ցույց կտանք՝ ինչ դիրքով լուսանկարներ են պետք։</p></div>
+  <div class="photo-grid">
+    <div class="photo-card"><img src="assets/boy.jpg"><div><h3>Լավ օրինակ</h3><ul><li>դեմքը պարզ երևում է</li><li>լավ լուսավորություն</li><li>մարմինը տեսանելի է</li></ul></div></div>
+    <div class="photo-card"><img src="assets/girl.webp"><div><h3>Լավ օրինակ</h3><ul><li>երեխան կենտրոնում է</li><li>նկարը բարձր որակով է</li><li>դեմքը փակված չէ</li></ul></div></div>
+  </div>
+</section>
+
+<section id="order" class="order-section">
+  <div class="form-wrap">
+    <div class="section-head left"><span>Պատվերի հարցաշար</span><h2>Լրացրեք պատվերի տվյալները</h2></div>
+    <form class="order-form">
+      <div class="selected-template">Ընտրված հեքիաթ՝ <b id="selectedTemplate">Դեռ ընտրված չէ</b></div>
+
+      <div id="readyBlock" class="ready-block hidden">
+        <h3>Խնդրում ենք ուղարկել երեխայի լուսանկարները՝ հնարավորինս նույն դիրքերով և արտահայտություններով</h3>
+        <p>Ընտրած հեքիաթի համար այստեղ կերևան տվյալ հերոսի գլխի դիրքերի օրինակները։ Նկարները կցեք ներքևի դաշտում՝ բարձր որակով։</p>
+        <div id="storyPoseBox" class="story-pose-box"></div>
+      </div>
+
+      <div id="customBlock" class="custom-block hidden">
+        <h3>Անհատական հեքիաթի հարցաշար</h3>
+        <p>Այս բաժինը լրացվում է միայն անհատական հեքիաթի դեպքում, որպեսզի պատմությունը ստեղծվի երեխայի հետաքրքրությունների հիման վրա։</p>
+      </div>
+
+      <div class="grid-2">
+        <label>Երեխայի անունը<input type="text" placeholder="օր․ Էվա"></label>
+        <label>Հեռախոսահամար<input type="tel" placeholder="+374"></label>
+        <label>Տարիքը<input type="number" placeholder="օր․ 5"></label>
+        <label>Սեռը<select><option>Աղջիկ</option><option>Տղա</option></select></label>
+      </div>
+
+      <div id="customQuestions" class="custom-questions hidden">
+      <label>Սիրելի գույնը / գույները<input type="text" placeholder="օր․ վարդագույն, կապույտ"></label>
+      <label>Սիրելի կենդանի կամ խաղալիք<input type="text" placeholder="օր․ շնիկ, արջուկ, մեքենա"></label>
+      <label>Ինչով է երեխան հետաքրքրվում<input type="text" placeholder="օր․ դինոզավրեր, երաժշտություն, տիեզերք"></label>
+
+      </div>
+
+      <label class="upload-box">
+        <span>Կցել երեխայի նկարները</span>
+        <small>Նվազագույնը 10 նկար։ Ցանկալի է՝ տարբեր դիրքերով և լավ որակով։</small>
+        <input id="photoUpload" type="file" accept="image/*" multiple onchange="handleFiles(event)">
+      </label>
+      <div id="uploadStatus" class="upload-status">Կցված է 0 նկար / նվազագույնը 10</div>
+      <div id="thumbs" class="thumbs"></div>
+
+      <div id="customOnlyFields" class="custom-only-fields">
+
+
+      <div class="choice-block">
+        <p>Պատմության ոճը</p>
+        <label><input type="checkbox"> Արկածային</label>
+        <label><input type="checkbox"> Ջերմ և ընտանեկան</label>
+        <label><input type="checkbox"> Ուսուցողական</label>
+        <label><input type="checkbox"> Ընկերության մասին</label>
+        <label><input type="checkbox"> Խիզախության մասին</label>
+      </div>
+
+      <label>Կարևոր մանրամասներ<textarea placeholder="Գրեք՝ ինչ պետք է պարտադիր երևա հեքիաթում..."></textarea></label>
+
+      <div class="extras">
+        <div><p>Հավելյալ հերոսներ</p><div class="counter"><button type="button" onclick="changeHero(-1)">−</button><span id="heroCount">0</span><button type="button" onclick="changeHero(1)">+</button></div><small>յուրաքանչյուր հավելյալ հերոս՝ +2,000 դր․</small></div>
+        <div><p>Հավելյալ թերթեր</p><div class="counter"><button type="button" onclick="changePage(-1)">−</button><span id="pageCount">0</span><button type="button" onclick="changePage(1)">+</button></div><small>յուրաքանչյուր հավելյալ թերթ՝ +2,500 դր․</small></div>
+      </div>
+
+      
+      
+</div>
+
+      
+      <div id="readyOnlyInfo" class="ready-only-info hidden">
+        <h3>Պատրաստի գրքի պատվեր</h3>
+        <p>Այս տարբերակի դեպքում լրացուցիչ հարցաշար և հետաքրքրությունների դաշտեր պետք չեն։ Դուք ընտրում եք պատրաստի հեքիաթը, իսկ մնացած մանրամասները կհաստատենք կապի միջոցով։</p>
+      </div>
+
+<div class="contact-method">
+        <h3>Ինչպե՞ս կապ հաստատենք ձեզ հետ անհրաժեշտության դեպքում</h3>
+        <label><input type="checkbox" name="contact" checked> WhatsApp</label>
+        <label><input type="checkbox" name="contact"> Telegram</label>
+        <label><input type="checkbox" name="contact"> Հեռախոսազանգ</label>
+      </div>
+
+      <button type="button" class="submit-btn" onclick="fakeSubmit()">Ուղարկել պատվերը</button>
+    </form>
+  </div>
+
+  <aside class="summary">
+    <h3>Պատվերի ամփոփում</h3>
+    <div class="line"><span id="planName">Անհատական գիրք + NFC</span><b id="planPrice">17,000 դր․</b></div>
+    <div class="line"><span>Հավելյալ հերոսներ</span><b id="heroPrice">0 դր․</b></div>
+    <div class="line"><span>Հավելյալ թերթեր</span><b id="pagePrice">0 դր․</b></div>
+    <hr><div class="total"><span>Ընդհանուր</span><b id="totalPrice">17,000 դր․</b></div>
+    <div class="conditions"><p>Գնի մեջ ներառված է՝</p><ul><li>կոշտ կազմ</li><li>10 էջ / 5 թերթ</li><li>մինչև 2 հերոս</li><li>անվճար փաթեթավորում</li><li>անվճար առաքում ՀՀ տարածքում</li></ul></div>
+  </aside>
+</section>
+</main>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/checkout.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
