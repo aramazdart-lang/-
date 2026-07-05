@@ -4,6 +4,15 @@ function cleanNext(next){
   next = decodeURIComponent(next);
   next = next.replace(/^\/+/, '');
 
+  // GitHub Pages-ի repo անունը չկորցնելու համար
+  if(next.includes('checkout.html')) return 'checkout.html';
+  if(next.includes('account/index.html')) return 'account/index.html';
+  if(next.includes('login.html')) return 'login.html';
+  if(next.includes('register.html')) return 'register.html';
+
+  return next;
+}
+
   try{
     const u = new URL(next, location.href);
     next = u.pathname.split('/').pop() || 'index.html';
