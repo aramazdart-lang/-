@@ -2,12 +2,14 @@ window.AramazdCheckout = {
   saveDraft(draft){ draft.created_at_local = new Date().toISOString(); localStorage.setItem('aramazd_pending_checkout', JSON.stringify(draft)); },
   getDraft(){ try { return JSON.parse(localStorage.getItem('aramazd_pending_checkout') || 'null'); } catch(e){ return null; } },
   clearDraft(){ localStorage.removeItem('aramazd_pending_checkout'); },
-  async start(draft, opts){
-    this.saveDraft(draft);
+async start(draft, opts){
+  this.saveDraft(draft);
 
-    const checkoutPath = (opts && opts.checkoutPath) || '../checkout.html';
-    const loginPath = (opts && opts.loginPath) || '../login.html';
+  const loginPath = (opts && opts.loginPath) || '../login.html';
+  const nextForLogin = (opts && opts.next) || '../checkout.html';
 
+  location.href = loginPath + '?next=' + encodeURIComponent(nextForLogin);
+}
     // Պատվերի ճիշտ հերթականությունը՝ ՄԻՇՏ նախ Մուտք, հետո Գրանցում հղումը, հետո Checkout
     // Նույնիսկ եթե օգտատերը արդեն մուտք գործած է, սկզբում բացում ենք մուտքի էջը։
     location.href = loginPath + '?next=' + encodeURIComponent(checkoutPath);
