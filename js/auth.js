@@ -2,11 +2,8 @@ function cleanNext(next){
   if(!next) return 'account/index.html';
 
   next = decodeURIComponent(next);
-
-  // եթե սխալով /checkout.html է եկել, դարձնում ենք checkout.html
   next = next.replace(/^\/+/, '');
 
-  // եթե լրիվ URL է, վերցնում ենք միայն path-ը
   try{
     const u = new URL(next, location.href);
     next = u.pathname.split('/').pop() || 'index.html';
@@ -17,7 +14,12 @@ function cleanNext(next){
 
 function getNext(defaultPath = 'account/index.html'){
   const next = new URLSearchParams(location.search).get('next');
-  return cleanNext(next || defaultPath);
+
+  if(next){
+    return cleanNext(next);
+  }
+
+  return defaultPath;
 }
 
 async function registerUser(){
@@ -55,7 +57,7 @@ async function registerUser(){
 
     if(msg.includes('already registered') || msg.includes('already exists')){
       alert('Այս email-ով հաշիվ արդեն կա։ Մուտք գործեք։');
-      location.href = 'login.html?next=' + encodeURIComponent(getNext('checkout.html'));
+      location.href = 'login.html?next=' + encodeURIComponent(getNext('account/index.html'));
       return;
     }
 
@@ -81,11 +83,11 @@ async function registerUser(){
   const session = await Aramazd.getSession();
 
   if(!session){
-    location.href = 'login.html?next=' + encodeURIComponent(getNext('checkout.html'));
+    location.href = 'login.html?next=' + encodeURIComponent(getNext('account/index.html'));
     return;
   }
 
-  location.href = getNext('checkout.html');
+  location.href = getNext('account/index.html');
 }
 
 async function loginUser(){
@@ -122,7 +124,7 @@ async function loginUser(){
     await Aramazd.ensureProfile(data.user);
   }
 
-  location.href = getNext('checkout.html');
+  location.href = getNext('account/index.html');
 }
 
 async function logoutUser(){
