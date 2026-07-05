@@ -4,31 +4,15 @@ function cleanNext(next){
   next = decodeURIComponent(next);
   next = next.replace(/^\/+/, '');
 
-  // GitHub Pages-ի repo անունը չկորցնելու համար
   if(next.includes('checkout.html')) return 'checkout.html';
   if(next.includes('account/index.html')) return 'account/index.html';
-  if(next.includes('login.html')) return 'login.html';
-  if(next.includes('register.html')) return 'register.html';
-
-  return next;
-}
-
-  try{
-    const u = new URL(next, location.href);
-    next = u.pathname.split('/').pop() || 'index.html';
-  }catch(e){}
 
   return next;
 }
 
 function getNext(defaultPath = 'account/index.html'){
   const next = new URLSearchParams(location.search).get('next');
-
-  if(next){
-    return cleanNext(next);
-  }
-
-  return defaultPath;
+  return next ? cleanNext(next) : defaultPath;
 }
 
 async function registerUser(){
@@ -76,6 +60,7 @@ async function registerUser(){
       btn.disabled = false;
       btn.textContent = 'Գրանցվել';
     }
+
     return;
   }
 
@@ -126,6 +111,7 @@ async function loginUser(){
       btn.disabled = false;
       btn.textContent = 'Մուտք գործել';
     }
+
     return;
   }
 
